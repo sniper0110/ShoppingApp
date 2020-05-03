@@ -24,8 +24,10 @@ class ProductItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
-    var product = Provider.of<Product>(context);
+    var product = Provider.of<Product>(
+      context,
+      listen: false,
+    );
     print("ProductItem rebuilds");
 
     return Container(
@@ -45,12 +47,16 @@ class ProductItem extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              IconButton(
-                icon: Icon(
-                  product.is_favorite ? Icons.favorite : Icons.favorite_border,
-                  color: Theme.of(context).primaryColor,
+              Consumer<Product>(
+                builder: (ctx, product, child) => IconButton(
+                  icon: Icon(
+                    product.is_favorite
+                        ? Icons.favorite
+                        : Icons.favorite_border,
+                    color: Theme.of(context).primaryColor,
+                  ),
+                  onPressed: () => product.toggle_favorite(),
                 ),
-                onPressed: () => product.toggle_favorite(),
               ),
               Container(
                 width: 80,
