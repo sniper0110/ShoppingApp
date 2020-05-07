@@ -47,4 +47,10 @@ class ProductsProvider with ChangeNotifier{
       return item.id == searched_id;
     });
   }
+
+  List<Product> get favorite_products_list{
+    return products_list.where((item){
+      return item.is_favorite;
+    }).toList();
+  }
 }

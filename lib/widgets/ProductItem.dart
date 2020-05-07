@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 
 import '../screens/ProductDetailsScreen.dart';
 import '../providers/Product.dart';
+import '../providers/CartProvider.dart';
 
 class ProductItem extends StatelessWidget {
 //  final String id;
@@ -28,7 +29,8 @@ class ProductItem extends StatelessWidget {
       context,
       listen: false,
     );
-    print("ProductItem rebuilds");
+
+    var cart = Provider.of<CartProvider>(context);
 
     return Container(
       child: GridTile(
@@ -69,9 +71,14 @@ class ProductItem extends StatelessWidget {
                   ),
                 ),
               ),
-              Icon(
-                Icons.shopping_cart,
-                color: Theme.of(context).primaryColor,
+              InkWell(
+                child: Icon(
+                  Icons.shopping_cart,
+                  color: Theme.of(context).primaryColor,
+                ),
+                onTap: (){
+                  cart.add_item(product.id, product.title, product.price);
+                },
               ),
             ],
           ),
